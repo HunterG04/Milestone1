@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +22,7 @@ namespace Milestone1
     /// </summary>
     public partial class MainWindow : Window
     {
+        SqlConnection sqlYelp = new SqlConnection();
         public MainWindow()
         {
             InitializeComponent();
@@ -38,7 +41,10 @@ namespace Milestone1
         */
         private void updateCityDropdown()
         {
-        
+            string sql = "put query here";
+            SqlDataAdapter adapter = new SqlDataAdapter(sql, sqlYelpCon());
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
         }
 
         /*
@@ -47,6 +53,16 @@ namespace Milestone1
         private void loadData()
         {
 
+        }
+
+        private SqlConnection sqlYelpCon()
+        {
+            if (sqlYelp.State == ConnectionState.Open)
+                return sqlYelp;
+            else
+                sqlYelp.Open();
+
+            return sqlYelp;
         }
 
         //events go under here
