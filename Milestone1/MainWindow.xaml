@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Milestone1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="300">
+        Title="MainWindow" Height="500" Width="400">
     <Grid Margin="0,0,2,0">
-        <ComboBox x:Name="comboState" HorizontalAlignment="Left" Margin="73,39,0,0" VerticalAlignment="Top" Width="138" SelectionChanged="comboState_SelectionChanged"/>
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="73,66,0,0" VerticalAlignment="Top" Width="138"/>
-        <Label x:Name="labelState" Content="State" HorizontalAlignment="Left" Margin="24,39,0,0" VerticalAlignment="Top" Height="22" FontSize="10"/>
-        <Label x:Name="labelCity" Content="City" HorizontalAlignment="Left" Margin="24,66,0,0" VerticalAlignment="Top" Height="22" FontSize="10"/>
-        <DataGrid x:Name="dataGridBusiness" HorizontalAlignment="Left" Margin="24,129,0,0" VerticalAlignment="Top" Width="245" Height="230"/>
+        <ComboBox x:Name="comboState" SelectedValuePath="state" HorizontalAlignment="Left" Margin="128,39,0,0" VerticalAlignment="Top" Width="138" SelectionChanged="comboState_SelectionChanged"/>
+        <ComboBox x:Name="comboCity" SelectedValuePath="city" HorizontalAlignment="Left" Margin="128,66,0,0" VerticalAlignment="Top" Width="138" SelectionChanged="comboCity_SelectionChanged"/>
+        <Label x:Name="labelState" Content="State" HorizontalAlignment="Left" Margin="78,39,0,0" VerticalAlignment="Top" Height="22" FontSize="10" RenderTransformOrigin="1.521,0.66"/>
+        <Label x:Name="labelCity" Content="City" HorizontalAlignment="Left" Margin="78,66,0,0" VerticalAlignment="Top" Height="22" FontSize="10"/>
+        <DataGrid x:Name="dataGridBusiness" Margin="24,129,25,10"/>
+        <Label x:Name="label" Content="Label" HorizontalAlignment="Left" Margin="61,98,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

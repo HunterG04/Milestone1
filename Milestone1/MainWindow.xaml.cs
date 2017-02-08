@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Npgsql;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -22,29 +23,46 @@ namespace Milestone1
     /// </summary>
     public partial class MainWindow : Window
     {
-        SqlConnection sqlYelp = new SqlConnection();
+        NpgsqlConnection sqlYelp = new NpgsqlConnection("Host=localhost; Username=postgres; Password=Office1; Database=Milestone1DB;");
         public MainWindow()
         {
             InitializeComponent();
+
+            //load the state dropdown right away
+            loadStateDropdown();
+            loadData();
         }
 
         /*
         Description: will load state dropdown with data
         */
-        private void updateStateDropdown()
+        private void loadStateDropdown()
         {
+            string sql = "SELECT DISTINCT STATE FROM BUSINESS WHERE STATE <> 'state' ORDER BY STATE";
+            NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(sql, sqlYelpCon());
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
 
+            comboState.ItemsSource = dt.DefaultView;
+            comboState.DisplayMemberPath = "state";
         }
 
         /*
         Description: will update city dropdown when a state is chosen in the state dropdown
         */
-        private void updateCityDropdown()
+        private void loadCityDropdown()
         {
-            string sql = "put query here";
-            SqlDataAdapter adapter = new SqlDataAdapter(sql, sqlYelpCon());
-            DataTable dt = new DataTable();
-            adapter.Fill(dt);
+            if (comboState.SelectedValue != null)
+            {
+                string sql = "SELECT DISTINCT CITY FROM BUSINESS WHERE STATE = '" + comboState.SelectedValue.ToString() + "'";
+                NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(sql, sqlYelpCon());
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+
+                
+                comboCity.DisplayMemberPath = "city";
+                comboCity.ItemsSource = dt.DefaultView;
+            }
         }
 
         /*
@@ -52,10 +70,29 @@ namespace Milestone1
         */
         private void loadData()
         {
+            string sql = "SELECT NAME, STATE, CITY FROM BUSINESS ";
 
+            if (comboState.SelectedValue != null)
+            {
+                sql += "WHERE STATE = '" + comboState.SelectedValue.ToString() + "' ";
+            }
+
+            if (comboCity.SelectedValue != null)
+            {
+                sql += "AND CITY = '" + comboCity.SelectedValue.ToString() + "' ";
+            }
+
+            sql += "ORDER BY NAME";
+
+            NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(sql, sqlYelpCon());
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+
+            dataGridBusiness.ItemsSource = dt.DefaultView;
         }
 
-        private SqlConnection sqlYelpCon()
+        //function to return the connection, open it if it is closed first
+        private NpgsqlConnection sqlYelpCon()
         {
             if (sqlYelp.State == ConnectionState.Open)
                 return sqlYelp;
@@ -68,7 +105,13 @@ namespace Milestone1
         //events go under here
         private void comboState_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            updateCityDropdown();
+            loadCityDropdown();
+            loadData();
+        }
+
+        private void comboCity_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            loadData();
         }
     }
 }
