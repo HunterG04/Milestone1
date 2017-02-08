@@ -11,8 +11,7 @@
         <ComboBox x:Name="comboCity" SelectedValuePath="city" HorizontalAlignment="Left" Margin="128,66,0,0" VerticalAlignment="Top" Width="138" SelectionChanged="comboCity_SelectionChanged"/>
         <Label x:Name="labelState" Content="State" HorizontalAlignment="Left" Margin="78,39,0,0" VerticalAlignment="Top" Height="22" FontSize="10" RenderTransformOrigin="1.521,0.66"/>
         <Label x:Name="labelCity" Content="City" HorizontalAlignment="Left" Margin="78,66,0,0" VerticalAlignment="Top" Height="22" FontSize="10"/>
-        <DataGrid x:Name="dataGridBusiness" Margin="24,129,25,10"/>
-        <Label x:Name="label" Content="Label" HorizontalAlignment="Left" Margin="61,98,0,0" VerticalAlignment="Top"/>
+        <DataGrid x:Name="dataGridBusiness" Margin="24,129,25,10" Loaded="dataGridBusiness_Loaded"/>
 
     </Grid>
 </Window>
